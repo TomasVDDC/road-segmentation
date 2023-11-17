@@ -1,3 +1,4 @@
 data/
 .ipynb_checkpoints/
 pred_Unet/
+pred_DeepLabV3/
