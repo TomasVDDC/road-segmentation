@@ -2,3 +2,7 @@ data/
 .ipynb_checkpoints/
 pred_Unet/
 pred_DeepLabV3/
+best_model.pth
+data_train_augmented/
+data_validation/
+lightning_logs/
