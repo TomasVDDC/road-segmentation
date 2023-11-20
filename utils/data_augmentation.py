@@ -29,49 +29,49 @@ def resize_augment_store_dataset(img_dict, mask_dict, keys, size_y, size_x, mask
     mask_resized = {}
     resized = "r_"
     for key in keys:
-    img = cv2.resize(img_dict[key], (size_y, size_x))
-    img_resized[resized+key] = img
-    mask = cv2.resize(mask_dict[key], (size_y, size_x))
-    mask[mask<mask_threshold] = 0 #pixel value {0, 255}
-    mask[mask>mask_threshold] = 255
-    mask_resized[resized+key] = mask
+        img = cv2.resize(img_dict[key], (size_y, size_x))
+        img_resized[resized+key] = img
+        mask = cv2.resize(mask_dict[key], (size_y, size_x))
+        mask[mask<mask_threshold] = 0 #pixel value {0, 255}
+        mask[mask>mask_threshold] = 255
+        mask_resized[resized+key] = mask
 
     if augment:
-    # Data augmentation
-    # Flip: horizontal and vertical
-    h_flipped = "h_"
-    v_flipped = "v_"
-    aug_h = albu.HorizontalFlip(p=1)
-    aug_v = albu.VerticalFlip(p=1)
+        # Data augmentation
+        # Flip: horizontal and vertical
+        h_flipped = "h_"
+        v_flipped = "v_"
+        aug_h = albu.HorizontalFlip(p=1)
+        aug_v = albu.VerticalFlip(p=1)
 
-    key_resized = list(img_resized.keys())
-    for key in key_resized:
-        h = aug_h(image=img_resized[key], mask=mask_resized[key])
-        v = aug_v(image=img_resized[key], mask=mask_resized[key])
-        img_resized[h_flipped+key] = h['image']
-        mask_resized[h_flipped+key] = h['mask']
-        img_resized[v_flipped+key] = v['image']
-        mask_resized[v_flipped+key] = v['mask']
+        key_resized = list(img_resized.keys())
+        for key in key_resized:
+            h = aug_h(image=img_resized[key], mask=mask_resized[key])
+            v = aug_v(image=img_resized[key], mask=mask_resized[key])
+            img_resized[h_flipped+key] = h['image']
+            mask_resized[h_flipped+key] = h['mask']
+            img_resized[v_flipped+key] = v['image']
+            mask_resized[v_flipped+key] = v['mask']
 
-    # Rotation: 90°, 180°, 270°
-    rot_90 = "90_"
-    rot_180 = "180_"
-    rot_270 = "270_"
-    key_resized_flipped = list(img_resized.keys())
-    for key in key_resized_flipped:
-        rot90_img = np.rot90(img_resized[key])
-        img_resized[rot_90+key] = rot90_img
-        rot180_img = np.rot90(rot90_img)
-        img_resized[rot_180+key] = rot180_img
-        rot270_img = np.rot90(rot180_img)
-        img_resized[rot_270+key] = rot270_img
+        # Rotation: 90°, 180°, 270°
+        rot_90 = "90_"
+        rot_180 = "180_"
+        rot_270 = "270_"
+        key_resized_flipped = list(img_resized.keys())
+        for key in key_resized_flipped:
+            rot90_img = np.rot90(img_resized[key])
+            img_resized[rot_90+key] = rot90_img
+            rot180_img = np.rot90(rot90_img)
+            img_resized[rot_180+key] = rot180_img
+            rot270_img = np.rot90(rot180_img)
+            img_resized[rot_270+key] = rot270_img
 
-        rot90_mask = np.rot90(mask_resized[key])
-        mask_resized[rot_90+key] = rot90_mask
-        rot180_mask = np.rot90(rot90_mask)
-        mask_resized[rot_180+key] = rot180_mask
-        rot270_mask = np.rot90(rot180_mask)
-        mask_resized[rot_270+key] = rot270_mask
+            rot90_mask = np.rot90(mask_resized[key])
+            mask_resized[rot_90+key] = rot90_mask
+            rot180_mask = np.rot90(rot90_mask)
+            mask_resized[rot_180+key] = rot180_mask
+            rot270_mask = np.rot90(rot180_mask)
+            mask_resized[rot_270+key] = rot270_mask
 
     store_images(img_resized, list(img_resized.keys()), path_img)
     store_images(mask_resized, list(mask_resized.keys()), path_mask)
@@ -121,6 +121,37 @@ def split_keys(keys, training_ratio=0.8, seed=1):
     train_indices = indices[:num_training]
     val_indices = indices[num_training:]
     train_keys, val_keys = keys[train_indices], keys[val_indices]
+    
     return np.array(train_keys), np.array(val_keys)
+
+def load_img_training(path_img, path_mask):
+    """
+      Load training images and corresponding masks from specified directories.
+
+      Args:
+      - path_img (str): The path to the directory containing training images. Images should be in PNG format.
+      - path_mask (str): The path to the directory containing corresponding masks for training images. Masks should be in PNG format and grayscale.
+
+      Returns:
+      - numpy.ndarray: An array containing training images loaded from the specified directory.
+      - numpy.ndarray: An array containing corresponding masks for the training images loaded from the specified directory.
+    """
+    train_img = {}
+    images = listdir(path_img)
+    images = [img for img in images if img.endswith(".png")]
+
+    for image in images:
+        img = cv2.imread(path_img + image, cv2.IMREAD_COLOR)
+        train_img[image] = img
+
+    train_mask = {}
+    masks = listdir(path_mask)
+    masks = [img for img in masks if img.endswith(".png")]
+
+    for mask in masks:
+        img = cv2.imread(path_mask + mask, cv2.IMREAD_GRAYSCALE)
+        train_mask[mask] = img
+
+    return train_img, train_mask
 
   
