@@ -6,3 +6,4 @@ best_model.pth
 data_train_augmented/
 data_validation/
 lightning_logs/
+utils/__pycache__/
