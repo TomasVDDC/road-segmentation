@@ -133,8 +133,8 @@ def load_img_training(path_img, path_mask):
       - path_mask (str): The path to the directory containing corresponding masks for training images. Masks should be in PNG format and grayscale.
 
       Returns:
-      - numpy.ndarray: An array containing training images loaded from the specified directory.
-      - numpy.ndarray: An array containing corresponding masks for the training images loaded from the specified directory.
+      - dict: A dictionary containing training images loaded from the specified directory.
+      - dict: A dictionary containing corresponding masks for the training images loaded from the specified directory.
     """
     train_img = {}
     images = listdir(path_img)
