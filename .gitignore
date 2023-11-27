@@ -8,3 +8,4 @@ data_validation/
 lightning_logs/
 utils/__pycache__/
 results/
+submissions/

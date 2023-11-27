@@ -14,7 +14,6 @@ def patch_to_label(patch):
     if df > foreground_threshold:
         return 1
     else:
-        print("a zero")
         return 0
 
 
@@ -26,9 +25,6 @@ def mask_to_submission_strings(image_filename):
     filename = image_filename.split('/')[-1]
     img_number = filename.split('_')[-1].split('.')[0]
    
-    print(image_filename)
-    print(img_number)
-
     im = mpimg.imread(image_filename)
     patch_size = 16
     for j in range(0, im.shape[1], patch_size):
