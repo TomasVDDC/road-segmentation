@@ -14,7 +14,6 @@ def patch_to_label(patch):
     if df > foreground_threshold:
         return 1
     else:
-        print("a zero")
         return 0
 
 
