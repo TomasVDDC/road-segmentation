@@ -19,7 +19,7 @@ def save_results(PARAMS,train_loss,validation_loss,validation_fscore):
     date_time_folder = now.strftime("%d_%m_%H:%M")
 
     # Create a new directory for today's date and time inside the 'results' folder
-    results_directory = './results/{}'.format(date_time_folder)
+    results_directory = './results/training_metrics/{}'.format(date_time_folder)
     os.makedirs(results_directory, exist_ok=True)
 
     # Save the parameters in the 'results' directory
