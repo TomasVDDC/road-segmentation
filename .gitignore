@@ -9,3 +9,8 @@ lightning_logs/
 utils/__pycache__/
 results/
 submissions/
+runTomas.ipynb
+runEd.ipynb
+runVic.ipynb
+results.ipynb/
+submissions/
