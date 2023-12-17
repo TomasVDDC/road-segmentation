@@ -3,9 +3,99 @@
 
 import os
 from os import listdir
-import cv2
 import numpy as np
+import cv2
 import albumentations as albu
+from ipywidgets import widgets
+from IPython.display import display, clear_output
+
+
+
+def confirm_and_augment():
+
+    def on_button_clicked(b):
+        if b.description == 'Yes':
+            clear_output(wait=True)
+            print("Proceeding with data augmentation...")
+            augment_data()
+        elif b.description == 'No':
+            clear_output(wait=True)
+            print("Data augmentation canceled.")
+
+    yes_button = widgets.Button(description="Yes")
+    no_button = widgets.Button(description="No")
+
+    yes_button.on_click(on_button_clicked)
+    no_button.on_click(on_button_clicked)
+
+    display(widgets.HBox([yes_button, no_button]))
+    print("Do you want to proceed with data augmentation? If augmented data already exists press <No>")
+
+
+def create_directory(path):
+    if not os.path.exists(path):
+        os.makedirs(path)
+        print(f"Directory {path} created")
+    else:
+        print(f"Directory {path} already exists")
+
+# Create folders for data augmentation
+def augment_data():
+    create_directory("data/data_train_augmented") 
+    create_directory("data/data_train_augmented/images/") 
+    create_directory("data/data_train_augmented/masks/") 
+    create_directory("data/data_train_augmented/raw/") 
+    create_directory("data/data_train_augmented/raw/images/") 
+    create_directory("data/data_train_augmented/raw/masks/") 
+    create_directory("data/data_validation") 
+    create_directory("data/data_validation/images/") 
+    create_directory("data/data_validation/masks/") 
+    create_directory("data/data_validation/raw/")
+    create_directory("data/data_validation/raw/images/") 
+    create_directory("data/data_validation/raw/masks/") 
+
+    # Load images and masks from dataset
+    PATH_IMG_TRAIN = "./data/training/images/"
+    PATH_MASK_TRAIN = "./data/training/groundtruth/"
+    img_train, mask_train = load_img_training(PATH_IMG_TRAIN, PATH_MASK_TRAIN)
+    key_list = list(img_train.keys())
+    key_list.sort()
+
+    # Split the images for training/validation (+ store)
+    training_ratio = 0.80
+    seed = 1
+    train_keys, val_keys = split_keys(np.array(key_list), training_ratio=training_ratio, seed=seed)
+
+    PATH_TR_IMG_AUG_RAW = "./data/data_train_augmented/raw/images/"
+    PATH_TR_MASK_AUG_RAW = "./data/data_train_augmented/raw/masks/"
+    PATH_VAL_IMG_RAW = "./data/data_validation/raw/images/"
+    PATH_VAL_MASK_RAW = "./data/data_validation/raw/masks/"
+
+    store_images(img_train, train_keys, PATH_TR_IMG_AUG_RAW)
+    store_images(mask_train, train_keys, PATH_TR_MASK_AUG_RAW)
+    store_images(img_train, val_keys, PATH_VAL_IMG_RAW)
+    store_images(mask_train, val_keys, PATH_VAL_MASK_RAW)
+
+    MASK_THRESHOLD = 120
+    SIZE_X = 416 #divisible by 32
+    SIZE_Y = 416 #divisible by 32
+    PATH_TR_IMG_AUG = "./data/data_train_augmented/images/"
+    PATH_TR_MASK_AUG = "./data/data_train_augmented/masks/"
+    PATH_VAL_IMG = "./data/data_validation/images/"
+    PATH_VAL_MASK = "./data/data_validation/masks/"
+
+    # Load validation images and resize
+    img_val_raw, mask_val_raw = load_img_training(PATH_VAL_IMG_RAW, PATH_VAL_MASK_RAW)
+    keys_val = list(img_val_raw.keys())
+    resize_augment_store_dataset(img_val_raw, mask_val_raw, keys_val, SIZE_Y, SIZE_X, MASK_THRESHOLD, PATH_VAL_IMG, PATH_VAL_MASK, augment=False)
+
+    # Load training images, resize and augment using geometric transformation (+ store)
+    img_tr_raw, mask_tr_raw = load_img_training(PATH_TR_IMG_AUG_RAW, PATH_TR_MASK_AUG_RAW)
+    keys_tr = list(img_tr_raw.keys())
+    resize_augment_store_dataset(img_tr_raw, mask_tr_raw, keys_tr, SIZE_Y, SIZE_X, MASK_THRESHOLD, PATH_TR_IMG_AUG, PATH_TR_MASK_AUG, augment=True)
+    print("Data augmentation completed.")
+
+
 
 def resize_augment_store_dataset(img_dict, mask_dict, keys, size_y, size_x, mask_threshold, path_img, path_mask, augment=False):
     """
