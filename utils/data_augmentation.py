@@ -11,44 +11,17 @@ from IPython.display import display, clear_output
 
 
 
-def confirm_and_augment():
-    """
-    Demands user confirmation before proceeding with data augmentation.
-
-    Args:
-    - None
-    Returns:
-    - None
-    """
-
-    def on_button_clicked(b):
-        if b.description == 'Yes':
-            clear_output(wait=True)
-            print("Proceeding with data augmentation...")
-            augment_data()
-        elif b.description == 'No':
-            clear_output(wait=True)
-            print("Data augmentation canceled.")
-
-    yes_button = widgets.Button(description="Yes")
-    no_button = widgets.Button(description="No")
-
-    yes_button.on_click(on_button_clicked)
-    no_button.on_click(on_button_clicked)
-
-    display(widgets.HBox([yes_button, no_button]))
-    print("Do you want to proceed with data augmentation? If augmented data already exists press <No>")
-
-
-def create_directory(path):
-    if not os.path.exists(path):
-        os.makedirs(path)
-        print(f"Directory {path} created")
-    else:
-        print(f"Directory {path} already exists")
-
-# Create folders for data augmentation
 def augment_data():
+    # Create folders for data augmentation and stores the images and masks in the corresponding folders
+
+    def create_directory(path):
+        if not os.path.exists(path):
+            os.makedirs(path)
+            print(f"Directory {path} created")
+        else:
+            print(f"Directory {path} already exists")
+
+
     create_directory("data/data_train_augmented") 
     create_directory("data/data_train_augmented/images/") 
     create_directory("data/data_train_augmented/masks/") 

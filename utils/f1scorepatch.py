@@ -3,6 +3,13 @@ import segmentation_models_pytorch as smp
 import torch
 
 class F1ScorePatch(smp.utils.base.Metric):
+    """
+    Computes F1 score for image segmentation on a patch level.
+    
+    This metric class evaluates segmentation performance by dividing 
+    the image into patches, assessing each patch against a threshold, 
+    and calculating the F1 score based on these patch classifications.
+    """
     def __init__(self, threshold=0.5, activation=None, patch_thr=0.25, patch_size=16, **kwargs):
         super().__init__(**kwargs)
         self.threshold = threshold

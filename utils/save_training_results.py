@@ -5,7 +5,15 @@ import numpy as np
 
 def save_results(PARAMS,train_loss,validation_loss,validation_fscore):
 
-    print("test")
+    """
+    Saves training metrics and parameters into a directory named with the current timestamp.
+    
+    Parameters:
+    - PARAMS (dict): Dictionary containing training parameters.
+    - train_loss (list): List of training loss values.
+    - validation_loss (list): List of validation loss values.
+    - validation_fscore (list): List of validation F1 score values.
+    """
     
     arrays_dict = {
     'train_loss': train_loss,
