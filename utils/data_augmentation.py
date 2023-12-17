@@ -12,6 +12,14 @@ from IPython.display import display, clear_output
 
 
 def confirm_and_augment():
+    """
+    Demands user confirmation before proceeding with data augmentation.
+
+    Args:
+    - None
+    Returns:
+    - None
+    """
 
     def on_button_clicked(b):
         if b.description == 'Yes':
