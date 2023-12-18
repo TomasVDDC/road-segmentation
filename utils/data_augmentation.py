@@ -144,6 +144,14 @@ def resize_augment_store_dataset(img_dict, mask_dict, keys, size_y, size_x, mask
             rot270_mask = np.rot90(rot180_mask)
             mask_resized[rot_270+key] = rot270_mask
 
+        small_r = "small_r_"
+        random_rotate = albu.SafeRotate(limit=45,p=1)
+        key_resized_flipped_small_r = list(img_resized.keys())
+        for key in key_resized_flipped_small_r:
+            c = random_rotate(image=img_resized[key], mask=mask_resized[key])
+            img_resized[small_r+key] = c['image']
+            mask_resized[small_r+key] = c['mask']
+
     store_images(img_resized, list(img_resized.keys()), path_img)
     store_images(mask_resized, list(mask_resized.keys()), path_mask)
 
@@ -160,9 +168,10 @@ def store_images(img_dict, keys, output_path):
     - None
     """
     for key in keys:
-        # Full path to save the image
-        save_path = os.path.join(output_path, key)
-        cv2.imwrite(save_path, img_dict[key])
+            # Full path to save the image
+            if not os.path.isfile(output_path):
+                save_path = os.path.join(output_path, key)
+                cv2.imwrite(save_path,img_dict[key])
 
     print(f"Images stored in {output_path}")
     
