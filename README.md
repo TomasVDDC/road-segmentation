@@ -12,11 +12,12 @@ This repository hosts a deep learning project aimed at segmenting roads from aer
 
 ### Dependencies
 
-- **Python Libraries**: `numpy`, `os` for basic operations; `matplotlib`, `cv2`, `PIL` for image processing; `torch`, `pandas` for machine learning tasks.
+- **Python Libraries**: `numpy`, `os` for basic operations; `matplotlib`, `cv2`, `PIL` for image processing; `torch`, `pandas` for machine learning tasks
 - **Segmentation Models PyTorch (SMP)**: Provides a high-level API for neural network creation. It offers nine pre-trained model architectures, including U-Net, for faster convergence. SMP simplifies the model development and training with a wide range of metrics and loss functions.
 https://github.com/qubvel/segmentation_models.pytorch
 - **Albumentations**: A library for diverse image transformation operations, enhancing computer vision tasks.
 https://github.com/albumentations-team/albumentations
+- **BayesianOmptimization**: A library that implements and easy to use Bayesian Optimization framework for hyperparameter optimization. https://github.com/bayesian-optimization/BayesianOptimization
 
 ## Data Preprocessing
 
