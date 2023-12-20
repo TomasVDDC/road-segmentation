@@ -6,7 +6,7 @@ import albumentations as albu
 from torch.utils.data import Dataset as BaseDataset
 
 class Dataset(BaseDataset):
-  CLASSES = ['road']
+  CLASSES = ['non-road','road']
 
   def __init__(self, images_dir, masks_dir=None, classes=None, augmentation=None, preprocessing=None, plot = False):
       if masks_dir == None:

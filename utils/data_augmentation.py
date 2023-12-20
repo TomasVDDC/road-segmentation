@@ -43,7 +43,7 @@ def augment_data():
     key_list.sort()
 
     # Split the images for training/validation (+ store)
-    training_ratio = 0.80
+    training_ratio = 0.95
     seed = 1
     train_keys, val_keys = split_keys(np.array(key_list), training_ratio=training_ratio, seed=seed)
 
