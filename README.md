@@ -19,6 +19,13 @@ https://github.com/qubvel/segmentation_models.pytorch
 https://github.com/albumentations-team/albumentations
 - **BayesianOptimization**: A library that implements and easy to use Bayesian Optimization framework for hyperparameter optimization. https://github.com/bayesian-optimization/BayesianOptimization
 
+### Installation
+The installation can be done directly in a google colab cell using the **!** prefix
+```bash
+pip install git+https://github.com/qubvel/segmentation_models.pytorch --quiet
+pip install -U albumentations --quiet
+pip install bayesian-optimization --quiet
+```
 ## Data Preprocessing
 
 ### Dataset Overview
