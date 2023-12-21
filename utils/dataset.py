@@ -21,7 +21,7 @@ class Dataset(BaseDataset):
       if classes is not None:
           self.class_values = [self.CLASSES.index(cls.lower())*255 for cls in classes]
 
-      self.augmentation = augmentation ###plus besoin ?
+      self.augmentation = augmentation 
       self.preprocessing = preprocessing
       # self.preprocessing = None
       self.plot = plot
@@ -33,13 +33,13 @@ class Dataset(BaseDataset):
       image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
       height, width, channel = image.shape
       if (height % 32) or (width % 32):
-          image = cv2.resize(image, (416, 416)) ###
+          image = cv2.resize(image, (416, 416)) 
 
       # initialize mask as None
       mask = None
 
       if self.masks_path == None:
-        if self.augmentation: ###plus besoin ?
+        if self.augmentation: 
           sample = self.augmentation(image=image)
           image = sample['image']
         if self.preprocessing:
@@ -49,7 +49,7 @@ class Dataset(BaseDataset):
 
       else:
         mask = cv2.imread(self.masks_path[i], 0)
-        if (height % 32) or (width % 32): ###
+        if (height % 32) or (width % 32): 
             mask = cv2.resize(mask, (416, 416))
             mask[mask<=120] = 0 #pixel value {0, 255}
             mask[mask>120] = 255
