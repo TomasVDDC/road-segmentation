@@ -12,8 +12,7 @@ from IPython.display import display, clear_output
 
 
 def augment_data():
-    # Create folders for data augmentation and stores the images and masks in the corresponding folders
-
+    # Creates folders for data augmentation and stores the images and masks in the corresponding folders
     def create_directory(path):
         if not os.path.exists(path):
             os.makedirs(path)
@@ -59,7 +58,7 @@ def augment_data():
 
     MASK_THRESHOLD = 120
     SIZE_X = 416 #divisible by 32
-    SIZE_Y = 416 #divisible by 32
+    SIZE_Y = 416 
     PATH_TR_IMG_AUG = "./data/data_train_augmented/images/"
     PATH_TR_MASK_AUG = "./data/data_train_augmented/masks/"
     PATH_VAL_IMG = "./data/data_validation/images/"
@@ -168,7 +167,6 @@ def store_images(img_dict, keys, output_path):
     - None
     """
     for key in keys:
-            # Full path to save the image
             if not os.path.isfile(output_path):
                 save_path = os.path.join(output_path, key)
                 cv2.imwrite(save_path,img_dict[key])
