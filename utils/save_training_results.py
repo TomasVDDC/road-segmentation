@@ -37,7 +37,6 @@ def save_results(PARAMS,train_loss,validation_loss,validation_fscore):
             file.write(f'{key}: {value}\n')
 
     # Save each array in the new directory
-   
         for name, array in arrays_dict.items():
             array_file_path = os.path.join(results_directory, f'{name}.npy')
             np.save(array_file_path, array)
