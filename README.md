@@ -9,7 +9,6 @@ This repository hosts a deep learning project aimed at segmenting roads from aer
 ### Prerequisites
 - **Python Version**: Python 3.10.2
 
-
 ### Environment
 
 - **Platform**: Google Colab
@@ -30,6 +29,24 @@ pip install git+https://github.com/qubvel/segmentation_models.pytorch --quiet
 pip install -U albumentations --quiet
 pip install bayesian-optimization --quiet
 ```
+
+## Reproducing Results
+
+Follow these steps to reproduce the results of this project:
+
+1. **Clone the Repository**
+   Clone the repository to your local machine using the following Git command:
+   ```bash
+   git clone https://github.com/CS-433/ml-project-2-roadmen-bruv/tree/submission
+   cd [repository directory]
+   ```
+    Ensure all data files are present in the data folder. This folder contains training and test images.
+2. **Running the Notebooks**:
+    - Run the `run.ipynb` notebook (You will need a GPU for training). This is the main executable notebook for the project and will use the optimized parameters to train the model and generate results.
+   - Open `bayesian_optimization.ipynb` to perform Bayesian optimization. This notebook searches for the parameters of the model.
+     
+3. **Viewing Results**: After running the notebooks, the results will be stored in the `results` folder. Such as the model weights, and images overlayed with the trained model's predicted mask.
+
 ## Data Preprocessing
 
 ### Dataset Overview
