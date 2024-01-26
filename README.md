@@ -6,6 +6,10 @@ This repository hosts a deep learning project aimed at segmenting roads from aer
 
 ## Project Setup
 
+### Prerequisites
+- **Python Version**: Python 3.10.2
+
+
 ### Environment
 
 - **Platform**: Google Colab
