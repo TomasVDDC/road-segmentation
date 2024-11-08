@@ -4,6 +4,14 @@
 
 This repository hosts a deep learning project aimed at segmenting roads from aerial images. The primary objective is to classify each 16x16 pixel patch as 'road' or 'non-road'. The project leverages a dataset comprising training images with ground truth masks and a test set for validation. Model performance is assessed using the F1 score to balance precision and recall.
 
+## Test Set Results
+The model is able to accurately segment thin and curved roads. It also avoids parking lots and railroads.
+
+<div style="text-align: center;">
+    <img src="./results/img_9.png" alt="Original Image 1" style="width: 45%; margin-right: 2%; display: inline-block;" />
+    <img src="./results/img_1.png" alt="Original Image 2" style="width: 45%; display: inline-block;" />
+</div>
+
 ## Project Setup
 
 ### Prerequisites
@@ -65,13 +73,6 @@ Follow these steps to reproduce the results of this project:
 - **Setup Environment**: Ready to use on Google Colab, only need to update the path to your drive directory
 - **Command Board**: Parameters of training can easily be configured before training in **PARAMS** dictionnary
 
-## Test Set Results
-The model is able to accurately segment thin and curved roads. It also avoids parking lots and railroads.
-
-<div style="text-align: center;">
-    <img src="./results/img_9.png" alt="Original Image 1" style="width: 45%; margin-right: 2%; display: inline-block;" />
-    <img src="./results/img_1.png" alt="Original Image 2" style="width: 45%; display: inline-block;" />
-</div>
 
 
 
